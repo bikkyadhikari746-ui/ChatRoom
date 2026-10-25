@@ -12,7 +12,7 @@ struct msg_node
     char msg[100];
     struct msg_node *next;
 };
-typedef struct
+typedef struct msg_queue
 {
     pthread_mutex_t lock;
     pthread_cond_t c;
@@ -57,7 +57,7 @@ void pushq(msg_queue *list, int clinet_id, char *message)
 struct msg_node *popq(msg_queue *list)
 {
     pthread_mutex_lock(&list->lock);
-    while (isempty(list))
+    while (isempty_msgqueue(list))
     {
         // printf("list is empty cannot dequeue going to sleep....\n");
         pthread_cond_wait(&list->c, &list->lock);

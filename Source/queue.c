@@ -10,7 +10,7 @@ struct node
     int connection;
 };
 
-typedef struct
+typedef struct queue
 {
     pthread_mutex_t lock;
     pthread_cond_t c;
@@ -86,12 +86,12 @@ void node_init(struct node *n)
     n->next = NULL;
     n->connection = 0;
 }
-struct queue *queue_create(void)
+queue *queue_create(void)
 {
     queue *q = malloc(sizeof(queue));
     if (q == NULL)
     {
-        return;
+        return NULL;
     }
     q->head = NULL;
     q->tail = NULL;
@@ -114,7 +114,7 @@ void queue_destroy(queue *q)
     pthread_cond_destroy(&q->c);
     free(q);
 }
-int get_clinetid(node *n)
+int get_clinetid(struct node *n)
 {
     if (n == NULL)
     {
@@ -122,7 +122,7 @@ int get_clinetid(node *n)
     }
     return n->clinet_id;
 }
-void free_node(node *n)
+void free_node(struct node *n)
 {
     free(n);
 }

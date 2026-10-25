@@ -1,5 +1,7 @@
-#include "network.h";
+#include "network.h"
 #include "queue.h"
+#include <stdio.h>
+#include <unistd.h>
 
 extern queue buffer;
 void *producer_thread(void *args)

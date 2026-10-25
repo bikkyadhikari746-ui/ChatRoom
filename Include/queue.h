@@ -4,7 +4,7 @@
 typedef struct node node;
 typedef struct queue queue;
 struct queue *queue_create(void);
-void queue_destroy(queue q);
+void queue_destroy(queue *q);
 void queue_init(queue *q);
 void node_init(struct node *n);
 int isempty(queue *list);

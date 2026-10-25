@@ -1,5 +1,7 @@
 #include "queue.h"
 #include "msgqueue.h"
+#include <stdio.h>
+#include <unistd.h>
 
 extern queue *buffer;
 extern msg_queue *msgqueue;
@@ -26,7 +28,7 @@ void *connection_establishing_thrd(void *args)
             indexs = 0;
         }
         char buffers[1024];
-        struct node *temp = dequeue(&buffer);
+        struct node *temp = dequeue(buffer);
         if (Active_client[indexs++] > 0)
             continue;
         Active_client[indexs++] = get_clinetid(temp);
@@ -47,7 +49,7 @@ void *connection_establishing_thrd(void *args)
             else
             {
                 buffers[bytesize] = '\0';
-                pushq(&msgqueue, id, buffers);
+                pushq(msgqueue, id, buffers);
                 printf("Message from id %d\n", id);
                 printf("%s", buffers);
             }
